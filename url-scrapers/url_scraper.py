@@ -7,9 +7,13 @@ from bs4 import BeautifulSoup
 html = urlopen("https://www.allrecipes.com/recipes/16492/everyday-cooking/special-collections/allrecipes-allstars/") # Insert your URL to extract
 bsObj = BeautifulSoup(html.read())
 
-allrecipe_urls = []
+allrecipes_urls = []
 
 for link in bsObj.find_all('a'):
-    allrecipe_urls.append(link.get('href'))
+    if link is not None:
+        allrecipes_urls.append(link.get('href', ''))
 
-print(allrecipe_urls)
+allrecipes_urls = [s for s in allrecipes_urls[3:] if 'https://www.allrecipes.com/recipe/' in s]
+
+
+print(allrecipes_urls)
